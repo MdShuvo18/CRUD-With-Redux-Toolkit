@@ -8,17 +8,24 @@ export const userSlice = createSlice({
         addUser: (state, action) => {
             state.push(action.payload)
         },
-        updateuser:(state,action)=>{
-        // console.log(action.payload);
-        state.push(action.payload)
-        
+        updateuser: (state, action) => {
+            const { id, name, email } = action.payload;
+            const uu = state.find(u => u.id == id)
+            if (uu) {
+                uu.name = name;
+                uu.email = email;
+            }
+
 
         },
         deleteUser: (state, action) => {
-            const userId = action.payload;
-            state.userList = state.userList.filter(user => user.id !== userId);
+            const { id } = action.payload;
+            const uu = state.find(u => u.id == id)
+            if (uu) {
+                return state.filter(u => u.id !== id);
+            }
         }
     }
 })
-export const { addUser, deleteUser,updateuser } = userSlice.actions;
+export const { addUser, deleteUser, updateuser } = userSlice.actions;
 export default userSlice.reducer;

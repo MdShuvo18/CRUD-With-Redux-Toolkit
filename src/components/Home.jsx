@@ -1,10 +1,16 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteUser } from "../Reducer/userSlice";
 
 const Home = () => {
     const users = useSelector(state => state.users);
-    console.log(users);
-
+    const dispatch = useDispatch()
+    // console.log(users);
+    const handleDelte = (id) => {
+        dispatch(deleteUser({
+            id: id,
+        }))
+    }
     return (
         <div className="container mx-auto p-6">
             <h2 className="text-2xl font-bold text-blue-600 mb-4 text-center">
@@ -38,8 +44,9 @@ const Home = () => {
                                     <button>
                                         <Link to={`/update/${user.id}`} className="btn bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded shadow-lg">Update</Link>
                                     </button>
-                                    <button>
-                                        <Link to={`/delete/${user.id}`} className="ml-5 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow-lg">Delete</Link>
+                                    <button
+                                        onClick={() => handleDelte(user.id)}
+                                        className="ml-5 bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded shadow-lg">Delete
                                     </button>
                                 </td>
                             </tr>
@@ -47,7 +54,7 @@ const Home = () => {
                     }
                 </tbody>
             </table>
-        </div>
+        </div >
     );
 };
 
